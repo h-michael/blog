@@ -1,7 +1,0 @@
-[submodule "public"]
-	path = public
-	url = git@github.com:h-michael/h-michael.github.io.git
-	branch = master
-[submodule "themes/Hugo-Octopress"]
-	path = themes/Hugo-Octopress
-	url = git@github.com:parsiya/Hugo-Octopress.git
