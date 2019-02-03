@@ -18,6 +18,7 @@ git revision: [rust-lang/rust: 7754eb05c41debde225077e1708ab7ba01df62be](https:/
 - [src/libsyntax_pos/span_encoding.rs](#span_encoding)
 - [src/libsyntax_pos/hygiene.rs](#hygiene)
 - [src/libsyntax/parse/mod.rs](#parse)
+- [src/libsyntax/tokenstream.rs](#tokenstream)
 
 <!--more-->
 
@@ -601,5 +602,85 @@ crate fn new_sub_parser_from_file<'a>(sess: &'a ParseSess,
     p.directory.ownership = directory_ownership;
     p.root_module_name = module_name;
     p
+}
+```
+
+<a id="tokenstream"></a>
+[src/libsyntax/tokenstream.rs](https://github.com/rust-lang/rust/blob/7754eb05c41debde225077e1708ab7ba01df62be/src/libsyntax/tokenstream.rs)
+```rust
+//! # Token Streams
+//!
+//! `TokenStream`s represent syntactic objects before they are converted into ASTs.
+//! A `TokenStream` is, roughly speaking, a sequence (eg stream) of `TokenTree`s,
+//! which are themselves a single `Token` or a `Delimited` subsequence of tokens.
+//!
+//! ## Ownership
+//! `TokenStreams` are persistent data structures constructed as ropes with reference
+//! counted-children. In general, this means that calling an operation on a `TokenStream`
+//! (such as `slice`) produces an entirely new `TokenStream` from the borrowed reference to
+//! the original. This essentially coerces `TokenStream`s into 'views' of their subparts,
+//! and a borrowed `TokenStream` is sufficient to build an owned `TokenStream` without taking
+//! ownership of the original.
+
+/// When the main rust parser encounters a syntax-extension invocation, it
+/// parses the arguments to the invocation as a token-tree. This is a very
+/// loose structure, such that all sorts of different AST-fragments can
+/// be passed to syntax extensions using a uniform type.
+///
+/// If the syntax extension is an MBE macro, it will attempt to match its
+/// LHS token tree against the provided token tree, and if it finds a
+/// match, will transcribe the RHS token tree, splicing in any captured
+/// `macro_parser::matched_nonterminals` into the `SubstNt`s it finds.
+///
+/// The RHS of an MBE macro is the only place `SubstNt`s are substituted.
+/// Nothing special happens to misnamed or misplaced `SubstNt`s.
+#[derive(Debug, Clone, PartialEq, RustcEncodable, RustcDecodable)]
+pub enum TokenTree {
+    /// A single token
+    Token(Span, token::Token),
+    /// A delimited sequence of token trees
+    Delimited(DelimSpan, DelimToken, TokenStream),
+}
+
+/// # Token Streams
+///
+/// A `TokenStream` is an abstract sequence of tokens, organized into `TokenTree`s.
+/// The goal is for procedural macros to work with `TokenStream`s and `TokenTree`s
+/// instead of a representation of the abstract syntax tree.
+/// Today's `TokenTree`s can still contain AST via `Token::Interpolated` for back-compat.
+///
+/// The use of `Option` is an optimization that avoids the need for an
+/// allocation when the stream is empty. However, it is not guaranteed that an
+/// empty stream is represented with `None`; it may be represented as a `Some`
+/// around an empty `Vec`.
+#[derive(Clone, Debug)]
+pub struct TokenStream(Option<Lrc<Vec<TreeAndJoint>>>);
+
+pub type TreeAndJoint = (TokenTree, IsJoint);
+
+// `TokenStream` is used a lot. Make sure it doesn't unintentionally get bigger.
+#[cfg(target_arch = "x86_64")]
+static_assert!(MEM_SIZE_OF_TOKEN_STREAM: mem::size_of::<TokenStream>() == 8);
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum IsJoint {
+    Joint,
+    NonJoint
+}
+
+#[derive(Clone)]
+pub struct TokenStreamBuilder(Vec<TokenStream>);
+
+
+#[derive(Clone)]
+pub struct Cursor {
+    pub stream: TokenStream,
+    index: usize,
+}
+
+#[derive(Debug, Copy, Clone, PartialEq, RustcEncodable, RustcDecodable)]
+pub struct DelimSpan {
+    pub open: Span,
+    pub close: Span,
 }
 ```
