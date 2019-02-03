@@ -28,6 +28,7 @@ pygmentsStyle= "monokai"
     hasCJKLanguage = true
 
 [params]
+  description = "Programing blog"
 
   # If false, all contents of posts will appear on the front page and in pagination
   truncate = true
@@ -61,7 +62,7 @@ pygmentsStyle= "monokai"
   defaultDescription = "programming"
 
   # Populate with your search keywords - these will appear in meta tags
-  # defaultKeywords = ["keyword1" , "keyword2" , "keyword3" , "keyword4"]
+  defaultKeywords = ["programing" , "rust"]
 
   # Set to true to hide ReadingTime on posts
   disableReadingTime = false
