@@ -7,7 +7,7 @@ enableemoji = true
 paginate = 10
 paginatePath = "page"
 pygmentscodefences = true
-disqusShortname = "h-michael-1"
+disqusShortname = "h-michael"
 
 [permalinks]
     post = "/:year/:month/:day/:filename/"
