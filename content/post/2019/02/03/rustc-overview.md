@@ -43,6 +43,8 @@ git revision: [rust-lang/rust: ee229f7fd060b9ff3cd5df4556dd550a3df0b62f](https:/
  - codegen_backend.join_codegen_and_link
  - controller_entry_point!
 
+<!--more-->
+
 <a id="phase_1"></a>
 #### [phase_1_parse_input](https://github.com/rust-lang/rust/blob/ee229f7fd060b9ff3cd5df4556dd550a3df0b62f/src/librustc_driver/driver.rs#L644)
 - hygiene::set_default_edition(sess.edition());
@@ -121,10 +123,3 @@ git revision: [rust-lang/rust: ee229f7fd060b9ff3cd5df4556dd550a3df0b62f](https:/
 
 - ::rustc::middle::dependency_format::calculate
 - codegen_backend.codegen_crate
-
-
-
-
-
-
-<!--more-->
