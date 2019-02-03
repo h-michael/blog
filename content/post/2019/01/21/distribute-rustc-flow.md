@@ -8,6 +8,7 @@ categories:
 - rust
 tags: 
  - rust
+ - memo
 ---
 
 # Entry point

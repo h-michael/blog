@@ -9,6 +9,7 @@ categories:
 tags:
 - rust
 - compiler
+- memo
 ---
 
 git revision: [rust-lang/rust: ee229f7fd060b9ff3cd5df4556dd550a3df0b62f](https://github.com/rust-lang/rust/tree/ee229f7fd060b9ff3cd5df4556dd550a3df0b62f)
