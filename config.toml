@@ -2,12 +2,12 @@ baseURL = "https://h-michael.com"
 languageCode = "ja-jp"
 title = "因果応報"
 theme = "Hugo-Octopress"
-disqusShortname = "h-michael"
 hasCJKLanguage = true
 enableemoji = true
 paginate = 10
 paginatePath = "page"
 pygmentscodefences = true
+disqusShortname = "h-michael-1"
 
 [permalinks]
     post = "/:year/:month/:day/:filename/"
