@@ -6,8 +6,11 @@ hasCJKLanguage = true
 enableemoji = true
 paginate = 10
 paginatePath = "page"
-pygmentscodefences = true
 disqusShortname = "h-michael"
+
+pygmentsCodefences = true
+pygmentsUseClasses = true
+pygmentsStyle= "monokai"
 
 [permalinks]
     post = "/:year/:month/:day/:filename/"
@@ -22,7 +25,6 @@ disqusShortname = "h-michael"
     email = "h[dot]hata[dot]ai[dot]t[at]gmail.com"
 
 [blackfriday]
-    pygmentsUseClasses = true
     hasCJKLanguage = true
 
 [params]
