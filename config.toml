@@ -21,6 +21,10 @@ disqusShortname = "h-michael"
     name = "Hirokazu Hata"
     email = "h[dot]hata[dot]ai[dot]t[at]gmail.com"
 
+[blackfriday]
+    pygmentsUseClasses = true
+    hasCJKLanguage = true
+
 [params]
 
   # If false, all contents of posts will appear on the front page and in pagination
