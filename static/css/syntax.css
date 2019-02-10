@@ -1,8 +1,6 @@
 /* Background */ .chroma {
   color: #f8f8f2;
   background-color: #272822;
-  max-height: 600px;
-  overflow-y: scroll;
   font-family:  'Source Code Pro', monospace;
 }
 /* Error */ .chroma .err { color: #960050; background-color: #1e0010 }
@@ -64,6 +62,6 @@
 /* GenericStrong */ .chroma .gs { font-weight: bold }
 /* GenericSubheading */ .chroma .gu { color: #75715e }
 code {
-  margin: 0.5em 0 0 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.5em;
   font-family: 'Source Code Pro', monospace;
 }
