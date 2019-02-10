@@ -3,7 +3,7 @@ title: "[Memo] Rustc Overview - librustc_driver"
 date: 2019-02-03T11:56:37+09:00
 draft: false
 toc: false
-comments: false
+comments: true
 categories:
 - rust
 tags:
@@ -13,6 +13,8 @@ tags:
 ---
 
 git revision: [rust-lang/rust: ee229f7fd060b9ff3cd5df4556dd550a3df0b62f](https://github.com/rust-lang/rust/tree/ee229f7fd060b9ff3cd5df4556dd550a3df0b62f)
+
+<!--more-->
 
 # [rustc](https://github.com/rust-lang/rust/tree/ee229f7fd060b9ff3cd5df4556dd550a3df0b62f/src/rustc)
 
@@ -43,8 +45,6 @@ git revision: [rust-lang/rust: ee229f7fd060b9ff3cd5df4556dd550a3df0b62f](https:/
   - [phase_4_codegen](#phase_4)
  - codegen_backend.join_codegen_and_link
  - controller_entry_point!
-
-<!--more-->
 
 <a id="phase_1"></a>
 #### [phase_1_parse_input](https://github.com/rust-lang/rust/blob/ee229f7fd060b9ff3cd5df4556dd550a3df0b62f/src/librustc_driver/driver.rs#L644)

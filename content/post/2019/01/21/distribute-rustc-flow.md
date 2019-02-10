@@ -3,13 +3,17 @@ title: "[Memo] Distribute Rustc Flow"
 date: 2019-01-21T10:14:58+09:00
 draft: false
 toc: false
-comments: false
+comments: true
 categories:
 - rust
 tags: 
  - rust
  - memo
 ---
+
+Reading rust building flow.
+
+<!--more-->
 
 # Entry point
 

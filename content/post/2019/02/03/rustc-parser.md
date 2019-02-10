@@ -3,7 +3,7 @@ title: "[Memo] Rustc Parser"
 date: 2019-02-03T16:38:13+09:00
 draft: false
 toc: false
-comments: false
+comments: true
 categories:
 - rust
 tags:
@@ -14,13 +14,13 @@ tags:
 
 git revision: [rust-lang/rust: 7754eb05c41debde225077e1708ab7ba01df62be](https://github.com/rust-lang/rust/tree/7754eb05c41debde225077e1708ab7ba01df62be)
 
+<!--more-->
+
 - [src/libsyntax_pos/lib.rs](#syntax_pos)
 - [src/libsyntax_pos/span_encoding.rs](#span_encoding)
 - [src/libsyntax_pos/hygiene.rs](#hygiene)
 - [src/libsyntax/parse/mod.rs](#parse)
 - [src/libsyntax/tokenstream.rs](#tokenstream)
-
-<!--more-->
 
 <a id="syntax_pos"></a>
 [src/libsyntax_pos/lib.rs](https://github.com/rust-lang/rust/tree/7754eb05c41debde225077e1708ab7ba01df62be/src/libsyntax_pos)
