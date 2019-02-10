@@ -46,7 +46,7 @@ pygmentsStyle= "monokai"
 
   # Text of the "Continue Reading" label. Supports markdown and inline HTML.
   # For example, &rarr; == right arrow.
-  continueReadingText = "Would you like to know more? &rarr;"
+  continueReadingText = "Read more &rarr;"
 
   # Google analytics code - remove if you do not have/want Google Analytics - needs JavaScript
   googleAnalytics = "UA-44654685-3"
