@@ -1,4 +1,4 @@
-baseURL = "https://h-michael.com"
+baseURL = "https://blog.h-michael.com"
 languageCode = "ja-jp"
 title = "因果応報"
 theme = "Hugo-Octopress"
@@ -59,7 +59,7 @@ pygmentsStyle= "monokai"
   textrss = false
 
   # Website's default description
-  defaultDescription = "programming"
+  defaultDescription = "I don't know"
 
   # Populate with your search keywords - these will appear in meta tags
   defaultKeywords = ["programing" , "rust"]
