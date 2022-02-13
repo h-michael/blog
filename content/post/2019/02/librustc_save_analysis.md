@@ -9,6 +9,8 @@ categories:
 tags:
 - rust
 - hir
+aliases:
+  - /2019/02/10/librustc_save_analysis/
 ---
 
 git revision: [rust-dev-tools/rls-data: 31a07110f5a1d00d5f0591cfcd46b64acd56e12a](https://github.com/rust-dev-tools/rls-data/tree/31a07110f5a1d00d5f0591cfcd46b64acd56e12a)
