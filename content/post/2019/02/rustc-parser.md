@@ -10,6 +10,8 @@ tags:
 - rust
 - parser
 - memo
+aliases:
+  - /2019/02/03/parser/
 ---
 
 git revision: [rust-lang/rust: 7754eb05c41debde225077e1708ab7ba01df62be](https://github.com/rust-lang/rust/tree/7754eb05c41debde225077e1708ab7ba01df62be)

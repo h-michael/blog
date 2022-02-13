@@ -9,6 +9,8 @@ categories:
 tags: 
  - rust
  - memo
+aliases:
+  - /2019/01/21/distribute-rustc-flow/
 ---
 
 Reading rust building flow.

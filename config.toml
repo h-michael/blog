@@ -13,7 +13,7 @@ pygmentsUseClasses = true
 pygmentsStyle= "monokai"
 
 [permalinks]
-    post = "/:year/:month/:day/:filename/"
+    post = "/:year/:month/:filename/"
     code = "/:filename/"
 
 [taxonomies]
