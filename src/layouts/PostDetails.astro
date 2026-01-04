@@ -99,8 +99,18 @@ const nextPost =
     >
       {title}
     </h1>
-    <div class="my-2 flex items-center gap-2">
+    <div class="my-2 flex flex-wrap items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+      {
+        tags.map(tag => (
+          <a
+            href={`/tags/${slugifyStr(tag)}/`}
+            class="rounded bg-muted/30 px-2 py-0.5 text-sm text-accent hover:bg-muted/50"
+          >
+            {tag}
+          </a>
+        ))
+      }
       <span
         aria-hidden="true"
         class:list={[

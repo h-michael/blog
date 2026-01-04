@@ -65,7 +65,7 @@ html[data-theme="dark"] {
 }
 
 .active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-4;
+  @apply underline decoration-2 underline-offset-4;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */

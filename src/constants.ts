@@ -1,7 +1,9 @@
 import type { Props } from "astro";
 import IconGitHub from "@/assets/icons/IconGitHub.svg";
 import IconBrandX from "@/assets/icons/IconBrandX.svg";
+import IconRss from "@/assets/icons/IconRss.svg";
 import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
+import IconMastodon from "@/assets/icons/IconMastodon.svg";
 import IconFacebook from "@/assets/icons/IconFacebook.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
 import { SITE } from "@/config";
@@ -15,6 +17,12 @@ interface Social {
 
 export const SOCIALS: Social[] = [
   {
+    name: "RSS",
+    href: "/rss.xml",
+    linkTitle: "RSS Feed",
+    icon: IconRss,
+  },
+  {
     name: "GitHub",
     href: "https://github.com/h-michael",
     linkTitle: `${SITE.author} on GitHub`,
@@ -27,8 +35,14 @@ export const SOCIALS: Social[] = [
     icon: IconBrandX,
   },
   {
+    name: "Mastodon",
+    href: "https://mstdn.jp/@h_micheal",
+    linkTitle: `${SITE.author} on Mastodon`,
+    icon: IconMastodon,
+  },
+  {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/hirokazu-hata-18778a84/",
+    href: "https://www.linkedin.com/in/hirokazu-h-18778a84/",
     linkTitle: `${SITE.author} on LinkedIn`,
     icon: IconLinkedin,
   },
