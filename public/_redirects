@@ -1,0 +1,17 @@
+# Old URL -> New URL redirects (301 permanent)
+/2019/01/first-post/ /posts/first-post/ 301
+/2019/01/20/first-post/ /posts/first-post/ 301
+/2019/01/distribute-rustc-flow/ /posts/distribute-rustc-flow/ 301
+/2019/01/21/distribute-rustc-flow/ /posts/distribute-rustc-flow/ 301
+/2019/02/librustc_save_analysis/ /posts/librustc_save_analysis/ 301
+/2019/02/10/librustc_save_analysis/ /posts/librustc_save_analysis/ 301
+/2019/02/rustc-overview/ /posts/rustc-overview/ 301
+/2019/02/03/rustc-overview/ /posts/rustc-overview/ 301
+/2019/02/parser/ /posts/rustc-parser/ 301
+/2019/02/03/parser/ /posts/rustc-parser/ 301
+
+# Category page redirects
+/categories/* /tags/:splat 301
+
+# RSS feed redirect
+/index.xml /rss.xml 301
