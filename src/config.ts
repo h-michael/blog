@@ -3,7 +3,7 @@ export const SITE = {
   author: "Hirokazu Hata",
   profile: "https://github.com/h-michael",
   desc: "忘れないうちに書き留める",
-  title: "因果応報",
+  title: "blog.h-michael",
   ogImage: "og.png",
   lightAndDarkMode: true,
   postPerIndex: 4,
