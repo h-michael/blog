@@ -1,3 +1,4 @@
+// @ts-nocheck
 function getPreferTheme() {
   const storedTheme = localStorage.getItem("theme");
 
@@ -40,30 +41,12 @@ function reflectPreference() {
   // @ts-ignore
   themeValue = window.themeValue || themeValue;
 
-  document.firstElementChild.setAttribute("data-theme", themeValue);
+  // Set data-theme to the user's choice (system/light/dark)
+  document.firstElementChild.setAttribute("data-theme", themeMode);
+  // Set data-theme-resolved to the actual theme that should be applied (light/dark)
+  document.firstElementChild.setAttribute("data-theme-resolved", themeValue);
 
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeMode);
-
-  const systemIcon = document.querySelector("#theme-icon-system");
-  const lightIcon = document.querySelector("#theme-icon-light");
-  const darkIcon = document.querySelector("#theme-icon-dark");
-
-  if (systemIcon && lightIcon && darkIcon) {
-    systemIcon.classList.toggle("scale-100", themeMode === "system");
-    systemIcon.classList.toggle("rotate-0", themeMode === "system");
-    systemIcon.classList.toggle("scale-0", themeMode !== "system");
-    systemIcon.classList.toggle("rotate-90", themeMode !== "system");
-
-    lightIcon.classList.toggle("scale-100", themeMode === "light");
-    lightIcon.classList.toggle("rotate-0", themeMode === "light");
-    lightIcon.classList.toggle("scale-0", themeMode !== "light");
-    lightIcon.classList.toggle("rotate-90", themeMode !== "light");
-
-    darkIcon.classList.toggle("scale-100", themeMode === "dark");
-    darkIcon.classList.toggle("rotate-0", themeMode === "dark");
-    darkIcon.classList.toggle("scale-0", themeMode !== "dark");
-    darkIcon.classList.toggle("-rotate-90", themeMode !== "dark");
-  }
 
   const body = document.body;
 

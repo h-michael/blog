@@ -2,10 +2,10 @@
 @import "./typography.css";
 @import "@pagefind/default-ui/css/ui.css";
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant dark (&:where([data-theme-resolved=dark], [data-theme-resolved=dark] *));
 
 :root,
-html[data-theme="light"] {
+html[data-theme-resolved="light"] {
   /* Light theme: zinc + indigo */
   --background: #fafafa;      /* zinc-50 */
   --foreground: #18181b;      /* zinc-900 */
@@ -14,7 +14,7 @@ html[data-theme="light"] {
   --border: #e4e4e7;          /* zinc-200 */
 }
 
-html[data-theme="dark"] {
+html[data-theme-resolved="dark"] {
   /* Dark theme: zinc + indigo */
   --background: #18181b;      /* zinc-900 */
   --foreground: #fafafa;      /* zinc-50 */
@@ -58,6 +58,40 @@ html[data-theme="dark"] {
   footer {
     @apply mx-auto max-w-app px-4;
   }
+  #theme-btn svg {
+    stroke: currentColor;
+  }
+
+  /* Hide all icons by default */
+  #theme-icon-system,
+  #theme-icon-light,
+  #theme-icon-dark {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(90deg);
+    transition: all 0.2s;
+  }
+
+  /* Show appropriate icon based on data-theme */
+  html[data-theme="system"] #theme-icon-system {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+
+  html[data-theme="light"] #theme-icon-light {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+
+  html[data-theme="dark"] #theme-icon-dark {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+
+  /* Fallback: show system icon if no data-theme is set */
+  html:not([data-theme]) #theme-icon-system {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
 }
 
 @utility max-w-app {
@@ -76,14 +110,14 @@ html[data-theme="dark"] {
 
 /* Pagefind search styling */
 :root,
-html[data-theme="light"] {
+html[data-theme-resolved="light"] {
   --pagefind-ui-primary: #4f46e5;          /* indigo-600 */
   --pagefind-ui-text: #18181b;             /* zinc-900 */
   --pagefind-ui-background: #fafafa;       /* zinc-50 */
   --pagefind-ui-border: #e4e4e7;           /* zinc-200 */
 }
 
-html[data-theme="dark"] {
+html[data-theme-resolved="dark"] {
   --pagefind-ui-primary: #818cf8;          /* indigo-400 */
   --pagefind-ui-text: #fafafa;             /* zinc-50 */
   --pagefind-ui-background: #18181b;       /* zinc-900 */

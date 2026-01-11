@@ -112,7 +112,7 @@
     padding: 1.25rem;
   }
 
-  html[data-theme="dark"] .astro-code {
+  html[data-theme-resolved="dark"] .astro-code {
     @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
   }
 
