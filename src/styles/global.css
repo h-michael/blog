@@ -1,26 +1,26 @@
 @import "tailwindcss";
 @import "./typography.css";
+@import "@pagefind/default-ui/css/ui.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-/* One Dark / One Light カラースキーム */
 :root,
 html[data-theme="light"] {
-  /* GitHub Light */
-  --background: #ffffff;
-  --foreground: #1f2328;
-  --accent: #0969da;
-  --muted: #656d76;
-  --border: #d0d7de;
+  /* Light theme: zinc + indigo */
+  --background: #fafafa;      /* zinc-50 */
+  --foreground: #18181b;      /* zinc-900 */
+  --accent: #4f46e5;          /* indigo-600 */
+  --muted: #71717a;           /* zinc-500 */
+  --border: #e4e4e7;          /* zinc-200 */
 }
 
 html[data-theme="dark"] {
-  /* One Dark Pro */
-  --background: #282c34;
-  --foreground: #abb2bf;
-  --accent: #61afef;
-  --muted: #5c6370;
-  --border: #3e4451;
+  /* Dark theme: zinc + indigo */
+  --background: #18181b;      /* zinc-900 */
+  --foreground: #fafafa;      /* zinc-50 */
+  --accent: #818cf8;          /* indigo-400 */
+  --muted: #a1a1aa;           /* zinc-400 */
+  --border: #3f3f46;          /* zinc-700 */
 }
 
 @theme inline {
@@ -61,7 +61,7 @@ html[data-theme="dark"] {
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  max-width: 800px;
 }
 
 .active-nav {
@@ -72,4 +72,20 @@ html[data-theme="dark"] {
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 1rem;
+}
+
+/* Pagefind search styling */
+:root,
+html[data-theme="light"] {
+  --pagefind-ui-primary: #4f46e5;          /* indigo-600 */
+  --pagefind-ui-text: #18181b;             /* zinc-900 */
+  --pagefind-ui-background: #fafafa;       /* zinc-50 */
+  --pagefind-ui-border: #e4e4e7;           /* zinc-200 */
+}
+
+html[data-theme="dark"] {
+  --pagefind-ui-primary: #818cf8;          /* indigo-400 */
+  --pagefind-ui-text: #fafafa;             /* zinc-50 */
+  --pagefind-ui-background: #18181b;       /* zinc-900 */
+  --pagefind-ui-border: #3f3f46;           /* zinc-700 */
 }

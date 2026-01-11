@@ -5,7 +5,8 @@ import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import LinkButton from "./LinkButton.astro";
+import IconMonitor from "@/assets/icons/IconMonitor.svg";
+import IconCheck from "@/assets/icons/IconCheck.svg";
 import { SITE } from "@/config";
 
 const { pathname } = Astro.url;
@@ -36,11 +37,11 @@ const isActive = (path: string) => {
   >
     <div
       id="top-nav-wrap"
-      class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
+      class="relative flex w-full items-baseline justify-between p-4 sm:items-center sm:py-6"
     >
       <a
         href="/"
-        class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+        class="site-title absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
       >
         {SITE.title}
       </a>
@@ -92,32 +93,62 @@ const isActive = (path: string) => {
             )
           }
           <li class="col-span-1 flex items-center justify-center">
-            <LinkButton
-              href="/search"
-              class:list={[
-                "focus-outline flex p-3 sm:p-1",
-                { "[&>svg]:stroke-accent": isActive("/search") },
-              ]}
-              ariaLabel="search"
+            <button
+              id="search-btn"
+              class="focus-outline flex p-3 sm:p-1"
+              aria-label="Open search"
               title="Search"
             >
               <IconSearch />
               <span class="sr-only">Search</span>
-            </LinkButton>
+            </button>
           </li>
           {
             SITE.lightAndDarkMode && (
-              <li class="col-span-1 flex items-center justify-center">
+              <li class="col-span-1 flex items-center justify-center relative">
                 <button
                   id="theme-btn"
-                  class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
-                  title="Toggles light & dark"
-                  aria-label="auto"
-                  aria-live="polite"
+                  class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent rounded-lg border border-border"
+                  title="Select theme"
+                  aria-label="Select theme"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                  <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                  <IconMonitor id="theme-icon-system" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all" />
+                  <IconSunHigh id="theme-icon-light" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all hidden dark:hidden" />
+                  <IconMoon id="theme-icon-dark" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 -rotate-90 transition-all hidden dark:block" />
                 </button>
+                <div
+                  id="theme-dropdown"
+                  class="hidden absolute top-full right-0 mt-2 w-32 rounded-lg border-2 border-border bg-background shadow-lg z-50"
+                >
+                  <div class="py-1">
+                    <button
+                      data-theme="system"
+                      class="flex w-full items-center px-3 py-2 text-sm hover:bg-muted/30 transition-colors"
+                    >
+                      <IconMonitor class="h-5 w-5" />
+                      <span class="ml-2">System</span>
+                      <IconCheck class="ml-auto h-4 w-4 text-accent opacity-0" data-check="system" />
+                    </button>
+                    <button
+                      data-theme="light"
+                      class="flex w-full items-center px-3 py-2 text-sm hover:bg-muted/30 transition-colors"
+                    >
+                      <IconSunHigh class="h-5 w-5" />
+                      <span class="ml-2">Light</span>
+                      <IconCheck class="ml-auto h-4 w-4 text-accent opacity-0" data-check="light" />
+                    </button>
+                    <button
+                      data-theme="dark"
+                      class="flex w-full items-center px-3 py-2 text-sm hover:bg-muted/30 transition-colors"
+                    >
+                      <IconMoon class="h-5 w-5" />
+                      <span class="ml-2">Dark</span>
+                      <IconCheck class="ml-auto h-4 w-4 text-accent opacity-0" data-check="dark" />
+                    </button>
+                  </div>
+                </div>
               </li>
             )
           }
@@ -125,8 +156,22 @@ const isActive = (path: string) => {
       </nav>
     </div>
   </div>
-  <Hr />
 </header>
+<Hr />
+
+<!-- Search Dialog -->
+<div
+  id="search-dialog"
+  class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+  aria-modal="true"
+  role="dialog"
+>
+  <div
+    class="fixed left-1/2 top-8 md:top-16 -translate-x-1/2 w-full max-w-2xl max-h-[90%] md:max-h-[80%] min-h-[15rem] overflow-y-auto rounded-lg border border-border bg-background p-5"
+  >
+    <div id="search-dialog-content"></div>
+  </div>
+</div>
 
 <script>
   function toggleNav() {
@@ -153,4 +198,179 @@ const isActive = (path: string) => {
 
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
+
+  // Theme dropdown
+  function initThemeDropdown() {
+    const themeBtn = document.querySelector("#theme-btn");
+    const themeDropdown = document.querySelector("#theme-dropdown");
+    const themeOptions = document.querySelectorAll("[data-theme]");
+
+    if (!themeBtn || !themeDropdown) return;
+
+    // Update check marks based on current theme
+    function updateCheckMarks() {
+      const currentTheme = localStorage.getItem("theme") || "system";
+      document.querySelectorAll("[data-check]").forEach(check => {
+        const checkTheme = check.getAttribute("data-check");
+        if (checkTheme === currentTheme) {
+          check.classList.remove("opacity-0");
+        } else {
+          check.classList.add("opacity-0");
+        }
+      });
+    }
+
+    updateCheckMarks();
+
+    // Toggle dropdown
+    themeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isExpanded = themeBtn.getAttribute("aria-expanded") === "true";
+      themeBtn.setAttribute("aria-expanded", isExpanded ? "false" : "true");
+      themeDropdown.classList.toggle("hidden");
+    });
+
+    // Handle theme selection
+    themeOptions.forEach(option => {
+      option.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const theme = option.getAttribute("data-theme");
+        if (theme && theme !== localStorage.getItem("theme")) {
+          localStorage.setItem("theme", theme);
+
+          // Call the global reflectPreference function from toggle-theme.js
+          // @ts-ignore - Custom properties added by toggle-theme.js
+          if (typeof window.reflectPreference === "function") {
+            // Update themeMode global variable
+            // @ts-ignore
+            window.themeMode = theme;
+            // Recalculate themeValue
+            // @ts-ignore
+            window.themeValue = theme === "system"
+              ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+              : theme;
+            // @ts-ignore
+            window.reflectPreference();
+          } else {
+            // Fallback if toggle-theme.js is not loaded
+            if (theme === "system") {
+              const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+              document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+            } else {
+              document.documentElement.setAttribute("data-theme", theme);
+            }
+          }
+
+          updateCheckMarks();
+          themeDropdown.classList.add("hidden");
+          themeBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", () => {
+      themeDropdown.classList.add("hidden");
+      themeBtn.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  initThemeDropdown();
+  document.addEventListener("astro:after-swap", initThemeDropdown);
+
+  // Search dialog
+  function initSearchDialog() {
+    const searchBtn = document.querySelector("#search-btn");
+    const searchDialog = document.querySelector("#search-dialog");
+    const searchDialogContent = document.querySelector("#search-dialog-content");
+
+    if (!searchBtn || !searchDialog || !searchDialogContent) return;
+
+    let pagefindUI: any = null;
+
+    // Open search dialog
+    async function openSearchDialog() {
+      if (!searchDialog || !searchDialogContent) return;
+
+      searchDialog.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+
+      // Initialize pagefind if not already done
+      if (!pagefindUI) {
+        try {
+          // @ts-expect-error - Missing types for @pagefind/default-ui
+          const { PagefindUI } = await import("@pagefind/default-ui");
+
+          pagefindUI = new PagefindUI({
+            element: "#search-dialog-content",
+            showSubResults: true,
+            showImages: false,
+          });
+
+          // Wait for PagefindUI to render
+          setTimeout(() => {
+            const input = document.querySelector<HTMLElement>(".pagefind-ui__search-input");
+            if (input) {
+              input.focus();
+            }
+          }, 150);
+        } catch (error) {
+          console.error("Failed to load Pagefind:", error);
+          if (searchDialogContent) {
+            searchDialogContent.innerHTML = '<p class="text-muted p-4">Failed to load search. Please try again.</p>';
+          }
+        }
+      } else {
+        // If already initialized, just focus the input
+        setTimeout(() => {
+          const input = document.querySelector<HTMLElement>(".pagefind-ui__search-input");
+          if (input) {
+            input.focus();
+          }
+        }, 50);
+      }
+    }
+
+    // Close search dialog
+    function closeSearchDialog() {
+      if (!searchDialog) return;
+      searchDialog.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+
+    // Open on search button click
+    searchBtn.addEventListener("click", openSearchDialog);
+
+    // Close on backdrop click
+    searchDialog.addEventListener("click", (e) => {
+      if (e.target === searchDialog) {
+        closeSearchDialog();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !searchDialog.classList.contains("hidden")) {
+        closeSearchDialog();
+      }
+    });
+
+    // Open on Cmd+K or Ctrl+K
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        openSearchDialog();
+      }
+    });
+
+    // Close dialog when clicking on a search result link
+    searchDialogContent.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).tagName === "A") {
+        closeSearchDialog();
+      }
+    });
+  }
+
+  initSearchDialog();
+  document.addEventListener("astro:after-swap", initSearchDialog);
 </script>

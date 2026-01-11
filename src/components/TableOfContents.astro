@@ -1,0 +1,130 @@
+---
+export interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+
+const toc = headings.filter(h => h.depth >= 2 && h.depth <= 3);
+
+if (toc.length === 0) return null;
+---
+
+{
+  toc.length > 0 && (
+    <details open class="toc mb-6 rounded-lg bg-muted/10 border border-border">
+      <summary class="cursor-pointer p-4 font-bold text-sm text-foreground hover:text-accent flex items-center justify-between">
+        <span>Table of Contents</span>
+        <svg
+          class="toc-chevron transition-transform"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </summary>
+      <div class="px-4 pb-4">
+        <ul class="toc-list space-y-2 text-sm">
+          {toc.map(heading => (
+            <li
+              class:list={[
+                "toc-item",
+                heading.depth === 2 ? "toc-item-h2" : "toc-item-h3",
+                { "ml-4": heading.depth === 3 },
+              ]}
+            >
+              <a
+                href={`#${heading.slug}`}
+                class="toc-link block text-muted no-underline transition-colors hover:text-accent"
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  )
+}
+
+<script>
+  function initTOC() {
+    const tocLinks = document.querySelectorAll(".toc-link");
+    const headings = document.querySelectorAll("h2[id], h3[id]");
+    const tocElement = document.querySelector(".toc") as HTMLDetailsElement | null;
+
+    if (tocLinks.length > 0 && headings.length > 0) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(link => {
+                link.classList.remove("text-accent", "font-medium");
+                link.classList.add("text-muted");
+              });
+              const activeLink = document.querySelector(
+                `.toc-link[href="#${entry.target.id}"]`
+              );
+              if (activeLink) {
+                activeLink.classList.remove("text-muted");
+                activeLink.classList.add("text-accent", "font-medium");
+              }
+            }
+          });
+        },
+        { rootMargin: "-80px 0px -80% 0px" }
+      );
+
+      headings.forEach(heading => observer.observe(heading));
+    }
+
+    if (tocElement) {
+      const chevron = tocElement.querySelector(".toc-chevron") as SVGElement | null;
+      tocElement.addEventListener("toggle", () => {
+        if (chevron && tocElement) {
+          if (tocElement.open) {
+            chevron.style.transform = "rotate(180deg)";
+          } else {
+            chevron.style.transform = "rotate(0deg)";
+          }
+        }
+      });
+    }
+  }
+
+  initTOC();
+  document.addEventListener("astro:after-swap", initTOC);
+</script>
+
+<style>
+  /* Counter for TOC numbering */
+  .toc-list {
+    counter-reset: toc-h2;
+  }
+
+  .toc-item-h2 {
+    counter-reset: toc-h3;
+    counter-increment: toc-h2;
+  }
+
+  .toc-item-h3 {
+    counter-increment: toc-h3;
+  }
+
+  .toc-item-h2 .toc-link::before {
+    content: counter(toc-h2) ". ";
+    font-weight: 600;
+  }
+
+  .toc-item-h3 .toc-link::before {
+    content: counter(toc-h2) "." counter(toc-h3) ". ";
+    font-weight: 600;
+  }
+</style>

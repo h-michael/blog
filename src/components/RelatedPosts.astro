@@ -1,0 +1,78 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import Datetime from "@/components/Datetime.astro";
+
+export interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+
+if (posts.length === 0) return;
+
+function getOgImageUrl(post: CollectionEntry<"blog">) {
+  const { ogImage } = post.data;
+  if (typeof ogImage === "string") {
+    return ogImage;
+  } else if (ogImage?.src) {
+    return ogImage.src;
+  }
+  return `${getPath(post.id, post.filePath)}/index.png`;
+}
+---
+
+{
+  posts.length > 0 && (
+    <section class="mt-12">
+      <h2 class="mb-4 text-xl font-bold text-foreground">Related Posts</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map(post => {
+          const ogImageUrl = getOgImageUrl(post);
+          return (
+            <a
+              href={getPath(post.id, post.filePath)}
+              class="group block overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-accent hover:shadow-md"
+            >
+              <div class="aspect-video w-full overflow-hidden bg-muted/20">
+                <img
+                  src={ogImageUrl}
+                  alt={post.data.title}
+                  class="h-full w-full object-cover transition-transform group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-4">
+                <h3 class="mb-2 line-clamp-2 text-base font-semibold text-foreground group-hover:text-accent">
+                  {post.data.title}
+                </h3>
+                <div class="mb-2 text-xs text-muted">
+                  <Datetime
+                    pubDatetime={post.data.pubDatetime}
+                    modDatetime={post.data.modDatetime}
+                    timezone={post.data.timezone}
+                    size="sm"
+                  />
+                </div>
+                {post.data.description && (
+                  <p class="line-clamp-2 text-sm text-muted">
+                    {post.data.description}
+                  </p>
+                )}
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="mt-2 flex flex-wrap gap-1">
+                    {post.data.tags.slice(0, 3).map(tag => (
+                      <span class="rounded bg-muted/20 px-1.5 py-0.5 text-xs text-muted">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  )
+}

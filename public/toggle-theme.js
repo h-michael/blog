@@ -1,74 +1,99 @@
-const primaryColorScheme = ""; // "light" | "dark"
-
-// Get theme data from local storage
-const currentTheme = localStorage.getItem("theme");
-
 function getPreferTheme() {
-  // return theme value in local storage if it is set
-  if (currentTheme) return currentTheme;
+  const storedTheme = localStorage.getItem("theme");
 
-  // return primary color scheme if it is set
-  if (primaryColorScheme) return primaryColorScheme;
+  if (storedTheme === "system" || !storedTheme) {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
 
-  // return user device's prefer color scheme
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return storedTheme;
 }
 
+function getThemeMode() {
+  return localStorage.getItem("theme") || "system";
+}
+
+let themeMode = getThemeMode();
 let themeValue = getPreferTheme();
 
+// Expose to global scope for Header.astro dropdown
+// @ts-ignore - Adding custom properties to window
+window.themeMode = themeMode;
+// @ts-ignore
+window.themeValue = themeValue;
+
 function setPreference() {
-  localStorage.setItem("theme", themeValue);
+  localStorage.setItem("theme", themeMode);
+  themeValue = getPreferTheme();
+  // @ts-ignore
+  window.themeMode = themeMode;
+  // @ts-ignore
+  window.themeValue = themeValue;
   reflectPreference();
 }
 
 function reflectPreference() {
+  // Update themeValue from window if it was changed externally
+  // @ts-ignore
+  themeMode = window.themeMode || themeMode;
+  // @ts-ignore
+  themeValue = window.themeValue || themeValue;
+
   document.firstElementChild.setAttribute("data-theme", themeValue);
 
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeMode);
 
-  // Get a reference to the body element
+  const systemIcon = document.querySelector("#theme-icon-system");
+  const lightIcon = document.querySelector("#theme-icon-light");
+  const darkIcon = document.querySelector("#theme-icon-dark");
+
+  if (systemIcon && lightIcon && darkIcon) {
+    systemIcon.classList.toggle("scale-100", themeMode === "system");
+    systemIcon.classList.toggle("rotate-0", themeMode === "system");
+    systemIcon.classList.toggle("scale-0", themeMode !== "system");
+    systemIcon.classList.toggle("rotate-90", themeMode !== "system");
+
+    lightIcon.classList.toggle("scale-100", themeMode === "light");
+    lightIcon.classList.toggle("rotate-0", themeMode === "light");
+    lightIcon.classList.toggle("scale-0", themeMode !== "light");
+    lightIcon.classList.toggle("rotate-90", themeMode !== "light");
+
+    darkIcon.classList.toggle("scale-100", themeMode === "dark");
+    darkIcon.classList.toggle("rotate-0", themeMode === "dark");
+    darkIcon.classList.toggle("scale-0", themeMode !== "dark");
+    darkIcon.classList.toggle("-rotate-90", themeMode !== "dark");
+  }
+
   const body = document.body;
 
-  // Check if the body element exists before using getComputedStyle
   if (body) {
-    // Get the computed styles for the body element
     const computedStyles = window.getComputedStyle(body);
-
-    // Get the background color property
     const bgColor = computedStyles.backgroundColor;
 
-    // Set the background color in <meta theme-color ... />
     document
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   }
 }
 
-// set early so no page flashes / CSS is made aware
+// Expose to global scope for Header.astro dropdown
+// @ts-ignore
+window.reflectPreference = reflectPreference;
+
 reflectPreference();
 
 window.onload = () => {
   function setThemeFeature() {
-    // set on load so screen readers can get the latest value on the button
     reflectPreference();
-
-    // now this script can find and listen for clicks on the control
-    document.querySelector("#theme-btn")?.addEventListener("click", () => {
-      themeValue = themeValue === "light" ? "dark" : "light";
-      setPreference();
-    });
+    // Theme button click is now handled by Header.astro dropdown
   }
 
   setThemeFeature();
 
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", setThemeFeature);
 };
 
-// Set theme-color value before page transition
-// to avoid navigation bar color flickering in Android dark mode
 document.addEventListener("astro:before-swap", event => {
   const bgColor = document
     .querySelector("meta[name='theme-color']")
@@ -79,10 +104,11 @@ document.addEventListener("astro:before-swap", event => {
     ?.setAttribute("content", bgColor);
 });
 
-// sync with system changes
 window
   .matchMedia("(prefers-color-scheme: dark)")
-  .addEventListener("change", ({ matches: isDark }) => {
-    themeValue = isDark ? "dark" : "light";
-    setPreference();
+  .addEventListener("change", () => {
+    if (themeMode === "system") {
+      themeValue = getPreferTheme();
+      reflectPreference();
+    }
   });

@@ -3,18 +3,30 @@
 @layer base {
   /* ===== Override default Tailwind Typography styles ===== */
   .app-prose {
-    @apply prose;
+    @apply prose prose-lg;
+
+    /* Zenn-inspired: generous line height for readability */
+    --tw-prose-body: var(--foreground);
+    line-height: 1.8;
 
     h1,
     h2,
     h3,
     h4,
     th {
-      @apply mb-3 text-foreground;
+      @apply mb-4 mt-10 text-foreground font-bold;
+    }
+
+    h2 {
+      @apply border-b border-border pb-2;
     }
 
     h3 {
-      @apply italic;
+      @apply mt-8;
+    }
+
+    p {
+      @apply my-6;
     }
 
     p,
@@ -28,15 +40,16 @@
     }
 
     a {
-      @apply wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent focus-visible:no-underline;
+      @apply wrap-break-word text-accent underline-offset-4 hover:opacity-75 focus-visible:no-underline;
     }
 
-    ul {
-      @apply overflow-x-clip;
+    ul,
+    ol {
+      @apply my-6 overflow-x-clip;
     }
 
     li {
-      @apply marker:text-accent;
+      @apply my-2 marker:text-accent;
     }
 
     hr {
@@ -75,7 +88,7 @@
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word opacity-80;
+      @apply my-6 border-s-4 border-s-accent/60 bg-muted/10 py-1 ps-4 wrap-break-word italic;
     }
 
     details {
@@ -93,11 +106,19 @@
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
-    @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
+    @apply flex rounded-lg border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
+    font-size: 0.9em;
+    line-height: 1.6;
+    padding: 1.25rem;
   }
 
   html[data-theme="dark"] .astro-code {
     @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
+  }
+
+  /* Inline code */
+  .app-prose :not(pre) > code {
+    @apply rounded bg-muted/30 px-1.5 py-0.5 text-[0.9em] font-normal;
   }
 
   /* Styles for Shiki transformers */
