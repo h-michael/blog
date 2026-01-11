@@ -200,7 +200,14 @@ const isActive = (path: string) => {
   document.addEventListener("astro:after-swap", toggleNav);
 
   // Theme dropdown
+  let themeDropdownCleanup: (() => void) | null = null;
+
   function initThemeDropdown() {
+    // Clean up previous event listeners
+    if (themeDropdownCleanup) {
+      themeDropdownCleanup();
+    }
+
     const themeBtn = document.querySelector("#theme-btn");
     const themeDropdown = document.querySelector("#theme-dropdown");
     const themeOptions = document.querySelectorAll("[data-theme]");
@@ -223,56 +230,86 @@ const isActive = (path: string) => {
     updateCheckMarks();
 
     // Toggle dropdown
-    themeBtn.addEventListener("click", (e) => {
+    const handleToggle = (e: Event) => {
       e.stopPropagation();
       const isExpanded = themeBtn.getAttribute("aria-expanded") === "true";
       themeBtn.setAttribute("aria-expanded", isExpanded ? "false" : "true");
       themeDropdown.classList.toggle("hidden");
-    });
+    };
+
+    themeBtn.addEventListener("click", handleToggle);
 
     // Handle theme selection
+    const optionHandlers: Array<{ element: Element; handler: (e: Event) => void }> = [];
+
     themeOptions.forEach(option => {
-      option.addEventListener("click", (e) => {
+      const handler = (e: Event) => {
         e.stopPropagation();
         const theme = option.getAttribute("data-theme");
-        if (theme && theme !== localStorage.getItem("theme")) {
-          localStorage.setItem("theme", theme);
+        if (theme) {
+          const currentTheme = localStorage.getItem("theme") || "system";
 
-          // Call the global reflectPreference function from toggle-theme.js
-          // @ts-ignore - Custom properties added by toggle-theme.js
-          if (typeof window.reflectPreference === "function") {
-            // Update themeMode global variable
-            // @ts-ignore
-            window.themeMode = theme;
-            // Recalculate themeValue
-            // @ts-ignore
-            window.themeValue = theme === "system"
-              ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-              : theme;
-            // @ts-ignore
-            window.reflectPreference();
-          } else {
-            // Fallback if toggle-theme.js is not loaded
-            if (theme === "system") {
-              const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-              document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+          // Only update if theme changed
+          if (theme !== currentTheme) {
+            localStorage.setItem("theme", theme);
+
+            // Call the global reflectPreference function from toggle-theme.js
+            // @ts-ignore - Custom properties added by toggle-theme.js
+            if (typeof window.reflectPreference === "function") {
+              // Update themeMode global variable
+              // @ts-ignore
+              window.themeMode = theme;
+              // Recalculate themeValue
+              // @ts-ignore
+              window.themeValue = theme === "system"
+                ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+                : theme;
+              // @ts-ignore
+              window.reflectPreference();
             } else {
-              document.documentElement.setAttribute("data-theme", theme);
+              // Fallback if toggle-theme.js is not loaded
+              if (theme === "system") {
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+              } else {
+                document.documentElement.setAttribute("data-theme", theme);
+              }
             }
+
+            updateCheckMarks();
           }
 
-          updateCheckMarks();
+          // Always close dropdown after clicking
           themeDropdown.classList.add("hidden");
           themeBtn.setAttribute("aria-expanded", "false");
         }
-      });
+      };
+
+      option.addEventListener("click", handler);
+      optionHandlers.push({ element: option, handler });
     });
 
     // Close dropdown when clicking outside
-    document.addEventListener("click", () => {
-      themeDropdown.classList.add("hidden");
-      themeBtn.setAttribute("aria-expanded", "false");
-    });
+    const closeDropdown = (e: Event) => {
+      const target = e.target as Node;
+      if (!themeDropdown.classList.contains("hidden") &&
+          !themeDropdown.contains(target) &&
+          !themeBtn.contains(target)) {
+        themeDropdown.classList.add("hidden");
+        themeBtn.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    document.addEventListener("click", closeDropdown);
+
+    // Store cleanup function
+    themeDropdownCleanup = () => {
+      themeBtn.removeEventListener("click", handleToggle);
+      optionHandlers.forEach(({ element, handler }) => {
+        element.removeEventListener("click", handler);
+      });
+      document.removeEventListener("click", closeDropdown);
+    };
   }
 
   initThemeDropdown();
