@@ -12,3 +12,6 @@
 !.prettierrc
 !eslint.config.js
 !README.md
+
+# Ignore markdown files in src
+src/**/*.md
