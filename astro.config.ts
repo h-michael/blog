@@ -17,6 +17,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
+      // Note: noindex pages (/tags/, /archives/, /search/) are temporarily included
+      // in sitemap to speed up Google's re-crawl and recognition of noindex tags.
+      // After GSC shows these pages are processed, remove them from sitemap.
     }),
   ],
   markdown: {
