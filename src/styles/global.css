@@ -7,20 +7,20 @@
 :root,
 html[data-theme-resolved="light"] {
   /* Light theme: zinc + indigo */
-  --background: #fafafa;      /* zinc-50 */
-  --foreground: #18181b;      /* zinc-900 */
-  --accent: #4f46e5;          /* indigo-600 */
-  --muted: #71717a;           /* zinc-500 */
-  --border: #e4e4e7;          /* zinc-200 */
+  --background: #fafafa; /* zinc-50 */
+  --foreground: #18181b; /* zinc-900 */
+  --accent: #4f46e5; /* indigo-600 */
+  --muted: #71717a; /* zinc-500 */
+  --border: #e4e4e7; /* zinc-200 */
 }
 
 html[data-theme-resolved="dark"] {
   /* Dark theme: zinc + indigo */
-  --background: #18181b;      /* zinc-900 */
-  --foreground: #fafafa;      /* zinc-50 */
-  --accent: #818cf8;          /* indigo-400 */
-  --muted: #a1a1aa;           /* zinc-400 */
-  --border: #3f3f46;          /* zinc-700 */
+  --background: #18181b; /* zinc-900 */
+  --foreground: #fafafa; /* zinc-50 */
+  --accent: #818cf8; /* indigo-400 */
+  --muted: #a1a1aa; /* zinc-400 */
+  --border: #3f3f46; /* zinc-700 */
 }
 
 @theme inline {
@@ -43,7 +43,10 @@ html[data-theme-resolved="dark"] {
   body {
     @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
   }
-  code, pre, kbd, samp {
+  code,
+  pre,
+  kbd,
+  samp {
     @apply font-mono;
   }
   a,
@@ -111,15 +114,15 @@ html[data-theme-resolved="dark"] {
 /* Pagefind search styling */
 :root,
 html[data-theme-resolved="light"] {
-  --pagefind-ui-primary: #4f46e5;          /* indigo-600 */
-  --pagefind-ui-text: #18181b;             /* zinc-900 */
-  --pagefind-ui-background: #fafafa;       /* zinc-50 */
-  --pagefind-ui-border: #e4e4e7;           /* zinc-200 */
+  --pagefind-ui-primary: #4f46e5; /* indigo-600 */
+  --pagefind-ui-text: #18181b; /* zinc-900 */
+  --pagefind-ui-background: #fafafa; /* zinc-50 */
+  --pagefind-ui-border: #e4e4e7; /* zinc-200 */
 }
 
 html[data-theme-resolved="dark"] {
-  --pagefind-ui-primary: #818cf8;          /* indigo-400 */
-  --pagefind-ui-text: #fafafa;             /* zinc-50 */
-  --pagefind-ui-background: #18181b;       /* zinc-900 */
-  --pagefind-ui-border: #3f3f46;           /* zinc-700 */
+  --pagefind-ui-primary: #818cf8; /* indigo-400 */
+  --pagefind-ui-text: #fafafa; /* zinc-50 */
+  --pagefind-ui-background: #18181b; /* zinc-900 */
+  --pagefind-ui-border: #3f3f46; /* zinc-700 */
 }

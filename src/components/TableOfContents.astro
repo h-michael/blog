@@ -12,8 +12,8 @@ if (toc.length === 0) return null;
 
 {
   toc.length > 0 && (
-    <details open class="toc mb-6 rounded-lg bg-muted/10 border border-border">
-      <summary class="cursor-pointer p-4 font-bold text-sm text-foreground hover:text-accent flex items-center justify-between">
+    <details open class="toc mb-6 rounded-lg border border-border bg-muted/10">
+      <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-bold text-foreground hover:text-accent">
         <span>Table of Contents</span>
         <svg
           class="toc-chevron transition-transform"
@@ -58,7 +58,9 @@ if (toc.length === 0) return null;
   function initTOC() {
     const tocLinks = document.querySelectorAll(".toc-link");
     const headings = document.querySelectorAll("h2[id], h3[id]");
-    const tocElement = document.querySelector(".toc") as HTMLDetailsElement | null;
+    const tocElement = document.querySelector(
+      ".toc"
+    ) as HTMLDetailsElement | null;
 
     if (tocLinks.length > 0 && headings.length > 0) {
       const observer = new IntersectionObserver(
@@ -86,7 +88,9 @@ if (toc.length === 0) return null;
     }
 
     if (tocElement) {
-      const chevron = tocElement.querySelector(".toc-chevron") as SVGElement | null;
+      const chevron = tocElement.querySelector(
+        ".toc-chevron"
+      ) as SVGElement | null;
       tocElement.addEventListener("toggle", () => {
         if (chevron && tocElement) {
           if (tocElement.open) {

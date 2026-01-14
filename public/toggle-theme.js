@@ -1,4 +1,3 @@
-// @ts-nocheck
 function getPreferTheme() {
   const storedTheme = localStorage.getItem("theme");
 
@@ -19,26 +18,16 @@ let themeMode = getThemeMode();
 let themeValue = getPreferTheme();
 
 // Expose to global scope for Header.astro dropdown
-// @ts-ignore - Adding custom properties to window
+// @ts-expect-error - Adding custom properties to window
 window.themeMode = themeMode;
-// @ts-ignore
+// @ts-expect-error - Adding custom properties to window
 window.themeValue = themeValue;
-
-function setPreference() {
-  localStorage.setItem("theme", themeMode);
-  themeValue = getPreferTheme();
-  // @ts-ignore
-  window.themeMode = themeMode;
-  // @ts-ignore
-  window.themeValue = themeValue;
-  reflectPreference();
-}
 
 function reflectPreference() {
   // Update themeValue from window if it was changed externally
-  // @ts-ignore
+  // @ts-expect-error - Reading custom properties from window
   themeMode = window.themeMode || themeMode;
-  // @ts-ignore
+  // @ts-expect-error - Reading custom properties from window
   themeValue = window.themeValue || themeValue;
 
   // Set data-theme to the user's choice (system/light/dark)
@@ -61,7 +50,7 @@ function reflectPreference() {
 }
 
 // Expose to global scope for Header.astro dropdown
-// @ts-ignore
+// @ts-expect-error - Adding custom properties to window
 window.reflectPreference = reflectPreference;
 
 reflectPreference();
@@ -82,6 +71,7 @@ document.addEventListener("astro:before-swap", event => {
     .querySelector("meta[name='theme-color']")
     ?.getAttribute("content");
 
+  // @ts-expect-error - event.newDocument is a custom property from Astro's view transitions
   event.newDocument
     .querySelector("meta[name='theme-color']")
     ?.setAttribute("content", bgColor);

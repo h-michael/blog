@@ -24,11 +24,7 @@ const { frontmatter } = Astro.props;
   <Header />
   <Main>
     <div class="flex flex-col items-center gap-4">
-      <img
-        src="/favicon.png"
-        alt={SITE.author}
-        class="size-24 rounded-full"
-      />
+      <img src="/favicon.png" alt={SITE.author} class="size-24 rounded-full" />
       <h1 class="text-xl font-semibold">{SITE.author}</h1>
       <div class="flex gap-2">
         <LinkButton
@@ -36,7 +32,9 @@ const { frontmatter } = Astro.props;
           class="p-2 hover:rotate-6"
           title={`${SITE.author} on GitHub`}
         >
-          <IconGitHub class="size-6 fill-transparent stroke-current stroke-2 opacity-90" />
+          <IconGitHub
+            class="size-6 fill-transparent stroke-current stroke-2 opacity-90"
+          />
           <span class="sr-only">{SITE.author} on GitHub</span>
         </LinkButton>
         <LinkButton
@@ -44,7 +42,9 @@ const { frontmatter } = Astro.props;
           class="p-2 hover:rotate-6"
           title={`${SITE.author} on X`}
         >
-          <IconBrandX class="size-6 fill-transparent stroke-current stroke-2 opacity-90" />
+          <IconBrandX
+            class="size-6 fill-transparent stroke-current stroke-2 opacity-90"
+          />
           <span class="sr-only">{SITE.author} on X</span>
         </LinkButton>
         <LinkButton
@@ -52,7 +52,9 @@ const { frontmatter } = Astro.props;
           class="p-2 hover:rotate-6"
           title={`${SITE.author} on Mastodon`}
         >
-          <IconMastodon class="size-6 fill-transparent stroke-current stroke-2 opacity-90" />
+          <IconMastodon
+            class="size-6 fill-transparent stroke-current stroke-2 opacity-90"
+          />
           <span class="sr-only">{SITE.author} on Mastodon</span>
         </LinkButton>
         <LinkButton
@@ -60,7 +62,9 @@ const { frontmatter } = Astro.props;
           class="p-2 hover:rotate-6"
           title={`${SITE.author} on LinkedIn`}
         >
-          <IconLinkedin class="size-6 fill-transparent stroke-current stroke-2 opacity-90" />
+          <IconLinkedin
+            class="size-6 fill-transparent stroke-current stroke-2 opacity-90"
+          />
           <span class="sr-only">{SITE.author} on LinkedIn</span>
         </LinkButton>
       </div>
