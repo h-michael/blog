@@ -1,15 +1,15 @@
-import { defineConfig, envField } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
-import remarkToc from "remark-toc";
-import remarkCollapse from "remark-collapse";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
-import { transformerFileName } from "./src/utils/transformers/fileName";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField } from "astro/config";
+import remarkCollapse from "remark-collapse";
+import remarkToc from "remark-toc";
 import { SITE } from "./src/config";
+import { transformerFileName } from "./src/utils/transformers/fileName";
 
 // https://astro.build/config
 export default defineConfig({
@@ -39,7 +39,7 @@ export default defineConfig({
   },
   vite: {
     // eslint-disable-next-line
-    // @ts-ignore
+    // @ts-expect-error
     // This will be fixed in Astro 6 with Vite 7 support
     // See: https://github.com/withastro/astro/issues/14030
     plugins: [tailwindcss()],

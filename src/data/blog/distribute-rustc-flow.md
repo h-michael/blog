@@ -8,15 +8,16 @@ tags:
 draft: false
 ---
 
+## Entry point
 
-# Entry point
+### rust-lang/rust
 
-## rust-lang/rust
 - .travis.yml
- - x.py
+  - x.py
   - bootstrap.py
 
-### [.travis.yml](https://github.com/rust-lang/rust/blob/66f0e42b4e6fd719099fe327d2731abd5b66ed41/.travis.yml)
+#### [.travis.yml](https://github.com/rust-lang/rust/blob/66f0e42b4e6fd719099fe327d2731abd5b66ed41/.travis.yml)
+
 ```yaml
 language: shell
 sudo: required
@@ -303,7 +304,8 @@ notifications:
   email: false
 ```
 
-### [src/bootstrap/bootstrap.py](https://github.com/rust-lang/rust/blob/c2863dd1b43f4f1fe63a209922f7e72db53f9663/src/bootstrap/bootstrap.py)
+#### [src/bootstrap/bootstrap.py](https://github.com/rust-lang/rust/blob/c2863dd1b43f4f1fe63a209922f7e72db53f9663/src/bootstrap/bootstrap.py)
+
 ```python
 from __future__ import absolute_import, division, print_function
 import argparse
@@ -1170,7 +1172,8 @@ if __name__ == '__main__':
     main()
 ```
 
-### [init_repo.sh](https://github.com/rust-lang/rust/blob/2a663555ddf36f6b041445894a8c175cd1bc718c/src/ci/init_repo.sh)
+#### [init_repo.sh](https://github.com/rust-lang/rust/blob/2a663555ddf36f6b041445894a8c175cd1bc718c/src/ci/init_repo.sh)
+
 ```shell
 #!/usr/bin/env bash
 
@@ -1392,7 +1395,8 @@ else
 fi
 ```
 
-### [src/ci/shared.sh](https://github.com/rust-lang/rust/blob/2a663555ddf36f6b041445894a8c175cd1bc718c/src/ci/shared.sh)
+#### [src/ci/shared.sh](https://github.com/rust-lang/rust/blob/2a663555ddf36f6b041445894a8c175cd1bc718c/src/ci/shared.sh)
+
 ```shell
 #!/bin/false
 
@@ -1454,10 +1458,11 @@ if ! declare -F travis_fold; then
 fi
 ```
 
-## rust-lang/rust-central-station
+### rust-lang/rust-central-station
 
-### [crontab](https://github.com/rust-lang/rust-central-station/blob/497bfad57775c89b1651b4d3908445ea24ddee6d/crontab)
-```
+#### [crontab](https://github.com/rust-lang/rust-central-station/blob/497bfad57775c89b1651b4d3908445ea24ddee6d/crontab)
+
+```text
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.cargo/bin
 
 # renewing ssl certs
@@ -1472,7 +1477,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.cargo/b
 */2 * * * * root /src/bin/cancelbot-rust.sh 2>&1 | logger --tag cancelbot-rust
 ```
 
-### [promote-release/src/main.rs](https://github.com/rust-lang/rust-central-station/blob/497bfad57775c89b1651b4d3908445ea24ddee6d/promote-release/src/main.rs)
+#### [promote-release/src/main.rs](https://github.com/rust-lang/rust-central-station/blob/497bfad57775c89b1651b4d3908445ea24ddee6d/promote-release/src/main.rs)
+
 ```rust
 extern crate curl;
 extern crate flate2;
@@ -1504,7 +1510,7 @@ struct Context {
     work: PathBuf,
     release: String,
     handle: Easy,
-	secrets: toml::Value,
+    secrets: toml::Value,
     date: String,
     current_version: Option<String>,
 }
@@ -2045,5 +2051,6 @@ fn output(cmd: &mut Command) -> String {
 }
 ```
 
-## rust-lang-nursery/tool-state
-## rust-lang/rustup.rs
+### rust-lang-nursery/tool-state
+
+### rust-lang/rustup.rs

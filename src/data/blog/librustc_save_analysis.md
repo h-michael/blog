@@ -23,6 +23,7 @@ RustのLanguage ServerのRlsは内部で`librustc_save_analysis`の出力デー�
 このデータの構造は`rls-data`に定義されている。
 
 [rls-data/src/lib.rs](https://github.com/rust-dev-tools/rls-data/blob/31a07110f5a1d00d5f0591cfcd46b64acd56e12a/src/lib.rs)
+
 ```rust
 
 pub struct Analysis {
@@ -280,10 +281,10 @@ pub struct Scope {
 ```
 
 <a id="save-analysis"></a>
+
 ## rustc -Zsave-analysis
 
 以下のファイルを`rustc -Zsave-analysis main.rs`で`save-analysis`データをdumpしてみる。
-
 
 ```rust
 fn main() {
@@ -307,7 +308,6 @@ impl Person {
 ```
 
 `save_analysis/main.json`
-
 
 ```json
 {
@@ -1267,6 +1267,7 @@ impl Person {
 ```
 
 <a id="unpretty-hir"></a>
+
 ## rustc -Zunpretty=hir
 
 rustcのコンパイルオプション`-Zunpretty=hir`で`HIR`をdumpできる。
@@ -1303,6 +1304,7 @@ impl Person {
 ```
 
 <a id="unpretty-hir-identified"></a>
+
 ## rustc -Zunpretty="hir,identified"
 
 rustcのコンパイルオプション`-Zunpretty="hir,identified"`で`HIR`をnode_id付きでdumpできる。
@@ -1351,8 +1353,8 @@ impl Person {
 } /* node_id: 36 hir local_id: 0 */
 ```
 
-
 <a id="unpretty-hir-typed"></a>
+
 ## rustc -Zunpretty="hir,typed"
 
 rustcのコンパイルオプション`-Zunpretty="hir,typed"`で`HIR`を型情報付きでdumpできる。
@@ -1400,11 +1402,11 @@ impl Person {
 ```
 
 <a id="unpretty-hir-tree"></a>
+
 ## rustc -Zunpretty=hir-tree
 
 rustcのコンパイルオプション`-Zunpretty=hir-tree`で`HIR`をtreeのままdumpできる。
 以下のファイルを`rustc -Zunpretty=hir-tree main.rs`でdumpしてみる。
-
 
 ```rust
 Crate {
@@ -1990,4 +1992,3 @@ Crate {
     }
 }
 ```
-

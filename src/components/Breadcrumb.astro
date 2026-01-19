@@ -8,17 +8,25 @@ const breadcrumbList = currentUrlPath.split("/").slice(1);
 
 // if breadcrumb is Home > Blog > Posts > 1 <etc>
 // replace page number with Posts (page number)
-if (breadcrumbList[0] === "blog" && breadcrumbList[1] === "posts" && !isNaN(Number(breadcrumbList[2]))) {
+if (
+  breadcrumbList[0] === "blog" &&
+  breadcrumbList[1] === "posts" &&
+  !Number.isNaN(Number(breadcrumbList[2]))
+) {
   breadcrumbList.splice(2, 1, `(page ${breadcrumbList[2]})`);
 }
 
 // if breadcrumb is Home > Blog > Tags > [tag] > [page] <etc>
 // replace [page] with (page number)
-if (breadcrumbList[0] === "blog" && breadcrumbList[1] === "tags" && !isNaN(Number(breadcrumbList[3]))) {
+if (
+  breadcrumbList[0] === "blog" &&
+  breadcrumbList[1] === "tags" &&
+  !Number.isNaN(Number(breadcrumbList[3]))
+) {
   breadcrumbList.splice(
     3,
     1,
-    `${Number(breadcrumbList[3]) === 1 ? "" : "(page " + breadcrumbList[3] + ")"}`
+    `${Number(breadcrumbList[3]) === 1 ? "" : `(page ${breadcrumbList[3]})`}`
   );
 }
 ---

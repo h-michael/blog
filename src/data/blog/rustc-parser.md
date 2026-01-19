@@ -17,7 +17,9 @@ draft: false
 - [src/libsyntax/tokenstream.rs](#tokenstream)
 
 <a id="syntax_pos"></a>
+
 [src/libsyntax_pos/lib.rs](https://github.com/rust-lang/rust/tree/7754eb05c41debde225077e1708ab7ba01df62be/src/libsyntax_pos)
+
 ```rust
 /// Differentiates between real files and common virtual files.
 #[derive(Debug, Eq, PartialEq, Clone, Ord, PartialOrd, Hash, RustcDecodable, RustcEncodable)]
@@ -395,7 +397,9 @@ pub struct SpanInterner {
 ```
 
 <a id="hygiene"></a>
+
 [src/libsyntax_pos/hygiene.rs](https://github.com/rust-lang/rust/blob/7754eb05c41debde225077e1708ab7ba01df62be/src/libsyntax_pos/hygiene.rs)
+
 ```rust
 //! Machinery for hygienic macros, inspired by the `MTWT[1]` paper.
 //!
@@ -517,7 +521,9 @@ pub enum CompilerDesugaringKind {
     ForLoop,
 }
 ```
+
 <a id="parse"></a>
+
 [src/libsyntax/parse/mod.rs](https://github.com/rust-lang/rust/blob/7754eb05c41debde225077e1708ab7ba01df62be/src/libsyntax/parse/mod.rs)
 
 ```rust
@@ -600,7 +606,9 @@ crate fn new_sub_parser_from_file<'a>(sess: &'a ParseSess,
 ```
 
 <a id="tokenstream"></a>
+
 [src/libsyntax/tokenstream.rs](https://github.com/rust-lang/rust/blob/7754eb05c41debde225077e1708ab7ba01df62be/src/libsyntax/tokenstream.rs)
+
 ```rust
 //! # Token Streams
 //!
