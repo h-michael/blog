@@ -1,9 +1,9 @@
 export const SITE = {
-  website: "https://blog.h-michael.com/",
+  website: "https://h-michael.com/",
   author: "Hirokazu Hata",
   profile: "https://github.com/h-michael",
   desc: "忘れないうちに書き留める",
-  title: "blog.h-michael",
+  title: "h-michael.com",
   ogImage: "og.png",
   lightAndDarkMode: true,
   postPerIndex: 4,

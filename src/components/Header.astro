@@ -69,13 +69,8 @@ const isActive = (path: string) => {
           ]}
         >
           <li class="col-span-2">
-            <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
-              Posts
-            </a>
-          </li>
-          <li class="col-span-2">
-            <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
-              Tags
+            <a href="/blog" class:list={{ "active-nav": isActive("/blog") }}>
+              Blog
             </a>
           </li>
           <li class="col-span-2">
@@ -83,18 +78,6 @@ const isActive = (path: string) => {
               About
             </a>
           </li>
-          {
-            SITE.showArchives && (
-              <li class="col-span-2">
-                <a
-                  href="/archives"
-                  class:list={{ "active-nav": isActive("/archives") }}
-                >
-                  Archives
-                </a>
-              </li>
-            )
-          }
           <li class="col-span-1 flex items-center justify-center">
             <button
               id="search-btn"
@@ -278,7 +261,6 @@ const isActive = (path: string) => {
             localStorage.setItem("theme", theme);
 
             // Call the global reflectPreference function from toggle-theme.js
-            // @ts-expect-error - Custom properties added by toggle-theme.js
             if (typeof window.reflectPreference === "function") {
               // Update themeMode global variable
               // @ts-expect-error - Custom properties added by toggle-theme.js
@@ -291,7 +273,6 @@ const isActive = (path: string) => {
                     ? "dark"
                     : "light"
                   : theme;
-              // @ts-expect-error - Custom properties added by toggle-theme.js
               window.reflectPreference();
             } else {
               // Fallback if toggle-theme.js is not loaded

@@ -20,7 +20,7 @@ export interface Props {
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={`${frontmatter.title} | ${SITE.title}`}>
+<Layout title={`${frontmatter.title} | ${SITE.title}`} noindex={true}>
   <Header />
   <Main>
     <div class="flex flex-col items-center gap-4">
